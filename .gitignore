@@ -1,0 +1,11 @@
+node_modules
+.next
+.env
+.env.local
+.vercel
+.DS_Store
+*.log
+db/*.db
+.zscripts
+.accesslog
+.stats

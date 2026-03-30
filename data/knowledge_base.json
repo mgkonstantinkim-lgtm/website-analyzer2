@@ -1,0 +1,1110 @@
+{
+  "schema_version": "2.0",
+  "project": "site_feature_analyzer",
+  "description": "Unified knowledge base with all works from the provided list, grouped into canonical features, mapping, recommendation rules, and bundles.",
+  "scoring_rules": {
+    "strong_dom_signal": 3,
+    "strong_text_signal": 2,
+    "weak_signal": 1,
+    "false_positive_penalty": -3,
+    "threshold_probable": 3,
+    "threshold_confident": 5
+  },
+  "feature_dictionary": [
+    {
+      "id": "accordion",
+      "name": "Аккордеон",
+      "category": "content",
+      "detectable": true,
+      "source_examples": [
+        "Аккордеон с двумя уровнями вложенности",
+        "Слайдер-аккордеон",
+        "Слайдер-аккордеон (вертикальный)",
+        "Слайдер-аккордеон (горизонтальный)",
+        "Аккордеон",
+        "Аккордеон (плавно раскрывающийся)",
+        "Аккордеон (энергично раскрывающийся)",
+        "Аккордеон (энергично раскрывающийся). Объемные вкладки."
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["аккордеон", "раскрывающийся", "faq", "вопрос-ответ"],
+      "dom_patterns": [".accordion", "[class*='accordion']", ".faq-item", "[data-accordion]"],
+      "false_positives": []
+    },
+    {
+      "id": "advantages_block",
+      "name": "Преимущества / Почему выбирают нас",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Недостатки и преимущества\"",
+        "Блок \"Бонусы и преимущества\"",
+        "Блок \"Наши преимущества\"",
+        "Блок \"Наши преимущества. Вариант 2\"",
+        "Блок \"Почему выбирают нас\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["наши преимущества", "почему выбирают", "почему мы", "наши плюсы", "преимущества компании"],
+      "dom_patterns": [".advantages", "[class*='advantage']", ".benefits", "[class*='why-us']"],
+      "false_positives": []
+    },
+    {
+      "id": "auth_popup",
+      "name": "Авторизация",
+      "category": "ux",
+      "detectable": true,
+      "source_examples": ["Блок авторизации"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["войти", "авторизация", "логин", "вход", "регистрация", "sign in", "login"],
+      "dom_patterns": [".auth", "[class*='login']", "[class*='auth']", "form[action*='login']"],
+      "false_positives": []
+    },
+    {
+      "id": "before_after",
+      "name": "До/После",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": ["Cлайдер До-После", "Блок До-После"],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["до после", "до и после", "before after", "результат"],
+      "dom_patterns": [".before-after", "[class*='before-after']", ".compare", "[class*='comparison']"],
+      "false_positives": []
+    },
+    {
+      "id": "bonus_system",
+      "name": "Бонусная система",
+      "category": "ecommerce",
+      "detectable": false,
+      "source_examples": ["Подключение Бонусной системы"],
+      "status_modes": ["recommend_only"],
+      "text_patterns": ["бонус", "бонусы", "баллы", "накопить"],
+      "dom_patterns": [],
+      "false_positives": []
+    },
+    {
+      "id": "booking_module",
+      "name": "Модуль бронирования",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": ["Модуль бронирования"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["забронировать", "бронирование", "бронь", "book", "booking"],
+      "dom_patterns": [".booking", "[class*='booking']", "form[class*='booking']"],
+      "false_positives": []
+    },
+    {
+      "id": "callback_widget",
+      "name": "Фиксированная кнопка обратного звонка",
+      "category": "leadgen",
+      "detectable": true,
+      "source_examples": ["Фиксированная кнопка с формой \"Обратный звонок\""],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["обратный звонок", "заказать звонок", "перезвоните", "callback"],
+      "dom_patterns": [".callback", "[class*='callback']", "[class*='call-back']", "button[class*='call']"],
+      "false_positives": []
+    },
+    {
+      "id": "categories_block",
+      "name": "Категории в блоке",
+      "category": "content",
+      "detectable": true,
+      "source_examples": ["Категории в блоках с отображением подразделов", "Категории в блоке"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["категории", "каталог", "рубрики", "разделы"],
+      "dom_patterns": [".categories", "[class*='category']", ".catalog-sections"],
+      "false_positives": []
+    },
+    {
+      "id": "certificates_block",
+      "name": "Сертификаты",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": ["Блок \"Наши сертификаты\"", "Блок \"Наши сертификаты\" с фоном"],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["сертификат", "сертификаты", "лицензия", "диплом", "награды"],
+      "dom_patterns": [".certificates", "[class*='certificate']", ".licenses"],
+      "false_positives": []
+    },
+    {
+      "id": "contacts_with_map",
+      "name": "Контакты с картой",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Контакты с картой и изображением\"",
+        "Блок \"Карта с контактами\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["контакты", "адрес", "карта", "как добраться", "схема проезда"],
+      "dom_patterns": [".contacts", "[class*='contact']", ".map", "iframe[src*='map']", "[class*='yandex-map']"],
+      "false_positives": []
+    },
+    {
+      "id": "dynamic_price_recalc",
+      "name": "Автопересчет цены/суммы",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": [
+        "Автоматический пересчёт суммы заказа при изменении количества товара",
+        "Автоматический пересчет цены в карточке при увеличении количества"
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": [],
+      "dom_patterns": ["input[type='number'][class*='qty']", "[class*='quantity']", "[data-price-calc]"],
+      "false_positives": []
+    },
+    {
+      "id": "facts_block",
+      "name": "Факты о нас / счетчики",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": ["Блок \"Факты о нас\""],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["факты о нас", "цифры", "статистика", "лет на рынке", "клиентов", "проектов"],
+      "dom_patterns": [".facts", "[class*='counter']", "[class*='stat']", ".numbers"],
+      "false_positives": []
+    },
+    {
+      "id": "faq_block",
+      "name": "FAQ / Вопросы и ответы",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Блок Вопрос-ответ с вкладками",
+        "Аккордеон для блока Вопрос-ответ",
+        "Блок \"Вопросы и ответы\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["faq", "вопрос", "ответ", "частые вопросы", "помощь"],
+      "dom_patterns": [".faq", "[class*='faq']", ".questions", "[class*='questions']"],
+      "false_positives": []
+    },
+    {
+      "id": "fortune_wheel",
+      "name": "Колесо фортуны",
+      "category": "conversion",
+      "detectable": true,
+      "source_examples": ["Колесо фортуны"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["колесо фортуны", "колесо", "выиграй", "приз"],
+      "dom_patterns": [".fortune-wheel", "[class*='wheel']", "[class*='fortune']"],
+      "false_positives": []
+    },
+    {
+      "id": "gallery",
+      "name": "Галерея / фотогалерея",
+      "category": "media",
+      "detectable": true,
+      "source_examples": [
+        "Галерея",
+        "Лента фотографий",
+        "Блок \"Фотогалерея с формой\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["галерея", "фотогалерея", "фото", "фотографии"],
+      "dom_patterns": [".gallery", "[class*='gallery']", ".photos", "[class*='photo-gallery']"],
+      "false_positives": []
+    },
+    {
+      "id": "geo_detection",
+      "name": "Геолокация",
+      "category": "ux",
+      "detectable": true,
+      "source_examples": ["Определение геолокации"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["геолокация", "ваш город", "определить город", "ваш регион"],
+      "dom_patterns": [".geo", "[class*='geo']", "[class*='location']", "[class*='city-select']"],
+      "false_positives": []
+    },
+    {
+      "id": "language_switcher",
+      "name": "Языковая версия сайта",
+      "category": "ux",
+      "detectable": true,
+      "source_examples": ["Языковая версия сайта", "Переключатель языка", "Language switcher"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["переключатель языка", "выбор языка", "языковая версия", "switch language", "select language"],
+      "dom_patterns": [".language-switcher", ".lang-selector", "#lang-switch", "a[hreflang]", "link[hreflang]", "[data-lang]", "[data-language]", "[class*='language-switch']", "[class*='lang-select']"],
+      "false_positives": ["сленг", "langbein", "mangel", "mangal"]
+    },
+    {
+      "id": "lazy_load_products",
+      "name": "Подгрузка товаров",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": ["Подгрузка товаров после нажатия на кнопку \"Показать ещё\""],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["показать ещё", "загрузить ещё", "показать больше"],
+      "dom_patterns": ["button[class*='load-more']", "[class*='show-more']", "[data-lazy-load]"],
+      "false_positives": []
+    },
+    {
+      "id": "lead_form_inline",
+      "name": "Встроенная форма обратной связи",
+      "category": "leadgen",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Ответим на все интересующие вопросы\" с формой обратной связи",
+        "\"Быстрая заявка\" в блоке",
+        "Блок \"Остались вопросы\" с формой обратной связи",
+        "Форма консультации с контактными данными",
+        "Блок \"Картинка с формой\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["оставить заявку", "отправить заявку", "заказать", "консультация", "связаться с нами"],
+      "dom_patterns": ["form[class*='contact']", ".contact-form", "[class*='lead-form']", "form[action*='send']"],
+      "false_positives": []
+    },
+    {
+      "id": "mega_menu",
+      "name": "Расширенное меню / навигация",
+      "category": "navigation",
+      "detectable": true,
+      "source_examples": [
+        "Дополнительное горизонтальное выпадающее меню",
+        "Горизонтальное выпадающее колонками меню",
+        "Верхнее сложное меню"
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": [],
+      "dom_patterns": [".mega-menu", "[class*='mega-menu']", "nav ul ul", "[class*='dropdown-menu']"],
+      "false_positives": []
+    },
+    {
+      "id": "messenger_buttons",
+      "name": "Фиксированный блок мессенджеров",
+      "category": "communication",
+      "detectable": true,
+      "source_examples": [
+        "Фиксированный блок с кнопками мессенджеров для сайта с иконкой",
+        "Фиксированный блок с кнопками мессенджеров"
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["telegram", "whatsapp", "viber", "мессенджер"],
+      "dom_patterns": ["a[href*='telegram']", "a[href*='whatsapp']", "a[href*='viber']", "[class*='messenger']"],
+      "false_positives": []
+    },
+    {
+      "id": "mini_cart",
+      "name": "Мини-корзина / фиксированная корзина",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": ["Быстрый просмотр корзины", "Фиксированная кнопка корзины"],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["корзина", "cart", "basket"],
+      "dom_patterns": [".cart", "[class*='cart']", ".basket", "[class*='mini-cart']"],
+      "false_positives": []
+    },
+    {
+      "id": "mobile_tabbar",
+      "name": "Tabbar мобильной навигации",
+      "category": "navigation",
+      "detectable": true,
+      "source_examples": ["Tabbar - Навигационная панель в мобильной версии"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": [],
+      "dom_patterns": [".tabbar", "[class*='tabbar']", "[class*='mobile-nav']", "[class*='bottom-nav']"],
+      "false_positives": []
+    },
+    {
+      "id": "multi_currency",
+      "name": "Мультивалюта",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": [
+        "Отображение цены товара в разных валютах по курсу ЦБ",
+        "Карточка товара с ценами в разных валютах"
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["валют", "usd", "eur", "руб", "₽", "$", "€"],
+      "dom_patterns": ["[class*='currency']", "select[name*='currency']", "[data-currency]"],
+      "false_positives": []
+    },
+    {
+      "id": "news_block",
+      "name": "Новости",
+      "category": "content",
+      "detectable": true,
+      "source_examples": [
+        "Новости в блоке (бегущая лента новостей)",
+        "Новости в блоке (стандартная лента новостей)",
+        "Блок \"Последние Новости\""
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["новости", "news", "новость"],
+      "dom_patterns": [".news", "[class*='news']", ".blog", "[class*='blog-posts']"],
+      "false_positives": []
+    },
+    {
+      "id": "one_click_payment",
+      "name": "Быстрая оплата / Яндекс Pay / Сплит",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": [
+        "Подготовка к подключению сервиса Яндекс Сплит",
+        "Оплата в 1 клик с Яндекс Пэй"
+      ],
+      "status_modes": ["detect_soft", "recommend_only"],
+      "text_patterns": ["купить в 1 клик", "быстрый заказ", "оплата", "яндекс", "split", "pay"],
+      "dom_patterns": ["[class*='one-click']", "[class*='quick-buy']", "button[class*='fast-order']"],
+      "false_positives": []
+    },
+    {
+      "id": "partners_block",
+      "name": "Партнеры / клиенты",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Наши партнеры\"",
+        "Блок \"Наши клиенты\"",
+        "Слайдер \"Наши партнеры\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["партнер", "клиент", "нам доверяют", "сотрудничают"],
+      "dom_patterns": [".partners", "[class*='partner']", ".clients", "[class*='client']"],
+      "false_positives": []
+    },
+    {
+      "id": "payment_module",
+      "name": "Платежный модуль / донаты",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": [
+        "Модуль \"Прием платежей\" в виде списка товаров",
+        "Модуль \"Прием платежей\"",
+        "Блок \"Сделать пожертвование\""
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["оплатить", "платеж", "донат", "пожертвование", "перевод"],
+      "dom_patterns": ["[class*='payment']", "[class*='donate']", "form[action*='pay']"],
+      "false_positives": []
+    },
+    {
+      "id": "popup_form",
+      "name": "Всплывающая / выезжающая форма",
+      "category": "leadgen",
+      "detectable": true,
+      "source_examples": [
+        "Всплывающая форма",
+        "Всплывающая форма \"Специальное предложение\"",
+        "Выезжающая форма"
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": [],
+      "dom_patterns": [".popup", "[class*='popup']", ".modal", "[class*='modal-form']", "[class*='slide-form']"],
+      "false_positives": []
+    },
+    {
+      "id": "portfolio_gallery",
+      "name": "Примеры работ / портфолио",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Наши работы\"",
+        "Блок \"Галерея выполненных работ\"",
+        "Блок \"Примеры работ\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["портфолио", "наши работы", "выполненные работы", "примеры работ", "проекты"],
+      "dom_patterns": [".portfolio", "[class*='portfolio']", ".works", "[class*='projects']"],
+      "false_positives": []
+    },
+    {
+      "id": "price_list_block",
+      "name": "Прайс-лист",
+      "category": "content",
+      "detectable": true,
+      "source_examples": ["Блок \"Прайс лист\""],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["прайс", "прайс-лист", "цены", "стоимость услуг", "тарифы"],
+      "dom_patterns": [".price-list", "[class*='price']", ".tariffs", "[class*='tariff']"],
+      "false_positives": []
+    },
+    {
+      "id": "product_variants",
+      "name": "Модификации / варианты товара",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": [
+        "Список модификаций в карточке товара с общей кнопкой заказа",
+        "Вывод модификаций на странице со списком товаров"
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["модификация", "вариант", "размер", "цвет"],
+      "dom_patterns": ["[class*='modification']", "[class*='variant']", "select[name*='size']", "select[name*='color']"],
+      "false_positives": []
+    },
+    {
+      "id": "product_video",
+      "name": "Медиа товара / видео / hover media",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": [
+        "Видео в карточке товара отдельной кнопкой и превью",
+        "Блок \"Текст с видео на заднем плане\"",
+        "Увеличение фото товара"
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["видео", "обзор", "демонстрация"],
+      "dom_patterns": ["video", "iframe[src*='youtube']", "iframe[src*='vimeo']", "[class*='video']"],
+      "false_positives": []
+    },
+    {
+      "id": "promo_block",
+      "name": "Промо / акции",
+      "category": "conversion",
+      "detectable": true,
+      "source_examples": [
+        "Боковое выпадающее с блоком \"Акции\"",
+        "Горизонтальный блок для акции",
+        "Слайдер для акций и спецпредложений"
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["акция", "спецпредложение", "скидка", "промо", "special offer"],
+      "dom_patterns": [".promo", "[class*='promo']", ".sale", "[class*='action']", "[class*='offer']"],
+      "false_positives": []
+    },
+    {
+      "id": "pwa",
+      "name": "PWA / мобильное приложение",
+      "category": "ux",
+      "detectable": false,
+      "source_examples": ["Разработка мобильного приложения (PWA)"],
+      "status_modes": ["recommend_only"],
+      "text_patterns": ["приложение", "app", "pwa"],
+      "dom_patterns": ["link[rel='manifest']", "[class*='pwa']"],
+      "false_positives": []
+    },
+    {
+      "id": "quick_view",
+      "name": "Быстрый просмотр товара",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": ["\"Быстрый просмотр\" товаров на странице категории"],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["быстрый просмотр", "quick view", "предпросмотр"],
+      "dom_patterns": ["[class*='quick-view']", "[class*='preview']", "button[class*='quick']"],
+      "false_positives": []
+    },
+    {
+      "id": "quiz_form",
+      "name": "Квиз-форма",
+      "category": "leadgen",
+      "detectable": true,
+      "source_examples": ["Квиз-форма", "Всплывающая Квиз-форма", "Квиз-лендинг"],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["квиз", "опрос", "тест", "подбор", "quiz"],
+      "dom_patterns": [".quiz", "[class*='quiz']", "[class*='survey']", "[class*='wizard']"],
+      "false_positives": []
+    },
+    {
+      "id": "recently_viewed",
+      "name": "Недавно просмотренные товары",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Недавно просмотренные товары\"",
+        "Блок \"Недавно просмотренные товары\" (слайдер)"
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["недавно просмотренные", "вы смотрели", "история просмотров"],
+      "dom_patterns": [".recently-viewed", "[class*='recently']", "[class*='viewed']", "[class*='history']"],
+      "false_positives": []
+    },
+    {
+      "id": "reviews_block",
+      "name": "Блок отзывов",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Отзывы в колонке",
+        "Отзывы в колонке с формой",
+        "Блок \"Отзывы\"",
+        "Блок \"Отзывы с комментариями (Слайдер)\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["отзыв", "отзывы", "review", "что говорят клиенты"],
+      "dom_patterns": [".reviews", "[class*='review']", ".testimonials", "[class*='testimonial']"],
+      "false_positives": []
+    },
+    {
+      "id": "service_calculator",
+      "name": "Калькулятор услуг / стоимости",
+      "category": "conversion",
+      "detectable": true,
+      "source_examples": ["Калькулятор шубы на заказ", "Калькулятор ипотеки или кредита"],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["калькулятор", "рассчитать", "расчет стоимости", "стоимость"],
+      "dom_patterns": [".calculator", "[class*='calculator']", "[class*='calc']", "form[class*='calc']"],
+      "false_positives": []
+    },
+    {
+      "id": "services_block",
+      "name": "Блок услуг / сервисов",
+      "category": "content",
+      "detectable": true,
+      "source_examples": ["Блок \"Сервисы\"", "Блок \"Услуги\"", "Блок для списка услуг"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["услуги", "сервисы", "наши услуги", "предлагаем"],
+      "dom_patterns": [".services", "[class*='service']", "[class*='services']"],
+      "false_positives": []
+    },
+    {
+      "id": "site_search",
+      "name": "Поиск по сайту",
+      "category": "navigation",
+      "detectable": true,
+      "source_examples": ["Поиск по сайту в левой колонке"],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["поиск", "найти", "search"],
+      "dom_patterns": ["input[type='search']", "input[name*='search']", "input[placeholder*='поиск']", "form[class*='search']"],
+      "false_positives": []
+    },
+    {
+      "id": "smart_search",
+      "name": "Умный поиск",
+      "category": "navigation",
+      "detectable": true,
+      "source_examples": ["Умный поиск"],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["умный поиск", "живой поиск", "поиск с подсказками"],
+      "dom_patterns": ["[class*='smart-search']", "[class*='live-search']", "[class*='autocomplete']"],
+      "false_positives": []
+    },
+    {
+      "id": "stages_block",
+      "name": "Этапы работы",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Как мы работаем\"",
+        "Блок \"Этапы работы, с иллюстрациями\"",
+        "Блок \"Этапы работы. Вариант 2\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["этапы", "как мы работаем", "процесс работы", "этапы работы"],
+      "dom_patterns": [".stages", "[class*='stage']", ".process", "[class*='step']"],
+      "false_positives": []
+    },
+    {
+      "id": "stock_indicator",
+      "name": "Индикатор наличия / остатков",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": [
+        "Вывод количества товара на складе в карточку и список товаров",
+        "Индикатор количества товара на складе"
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["в наличии", "нет в наличии", "остаток", "склад"],
+      "dom_patterns": ["[class*='stock']", "[class*='availability']", "[class*='in-stock']"],
+      "false_positives": []
+    },
+    {
+      "id": "tabs",
+      "name": "Вкладки / табы",
+      "category": "content",
+      "detectable": true,
+      "source_examples": [
+        "Вкладки с фоном",
+        "Вкладки без фона",
+        "Вкладки закругленные"
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": [],
+      "dom_patterns": [".tabs", "[class*='tab']", "[role='tablist']", "[data-tabs]"],
+      "false_positives": []
+    },
+    {
+      "id": "team_block",
+      "name": "Команда / сотрудники",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Наша команда\"",
+        "Блок \"Список сотрудников\"",
+        "Слайдер \"Наши специалисты\""
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["команда", "сотрудники", "наша команда", "специалисты", "персонал"],
+      "dom_patterns": [".team", "[class*='team']", ".staff", "[class*='employee']"],
+      "false_positives": []
+    },
+    {
+      "id": "ticker",
+      "name": "Бегущая строка / тикер",
+      "category": "content",
+      "detectable": true,
+      "source_examples": ["Бегущая строка", "Бегущая строка с картинками"],
+      "status_modes": ["detect_soft"],
+      "text_patterns": [],
+      "dom_patterns": [".ticker", "[class*='ticker']", ".marquee", "[class*='marquee']"],
+      "false_positives": []
+    },
+    {
+      "id": "timer_block",
+      "name": "Таймер",
+      "category": "conversion",
+      "detectable": true,
+      "source_examples": [
+        "Блок \"Таймер с формой\"",
+        "Блок \"Продающий блок с таймером и формой\""
+      ],
+      "status_modes": ["detect_soft"],
+      "text_patterns": ["таймер", "обратный отсчет", "до конца акции"],
+      "dom_patterns": [".timer", "[class*='timer']", "[class*='countdown']", "[data-countdown]"],
+      "false_positives": []
+    },
+    {
+      "id": "video_reviews",
+      "name": "Видеоотзывы",
+      "category": "trust",
+      "detectable": true,
+      "source_examples": [
+        "Слайдер с видеоотзывами. Вариант 3",
+        "Слайдер с видеоотзывами и текстом"
+      ],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["видеоотзыв", "видео-отзыв"],
+      "dom_patterns": [".video-reviews", "[class*='video-review']"],
+      "false_positives": []
+    },
+    {
+      "id": "wishlist_compare",
+      "name": "Избранное / сравнение",
+      "category": "ecommerce",
+      "detectable": true,
+      "source_examples": ["Модуль \"Избранные товары\"", "Модуль \"Сравнение товаров\""],
+      "status_modes": ["detect_strict"],
+      "text_patterns": ["избранное", "сравнение", "сравнить", "wishlist", "compare"],
+      "dom_patterns": [".wishlist", "[class*='wishlist']", ".compare", "[class*='compare']"],
+      "false_positives": []
+    }
+  ],
+  "site_type_rules": {
+    "landing": {
+      "indicators": {
+        "single_page": 2,
+        "long_scroll": 2,
+        "many_cta": 3,
+        "lead_forms": 3,
+        "timer_blocks": 2,
+        "no_catalog": 1
+      },
+      "description": "Одностраничный продающий сайт с акцентом на конверсию"
+    },
+    "services": {
+      "indicators": {
+        "services_block": 3,
+        "portfolio": 2,
+        "contact_forms": 2,
+        "price_list": 2,
+        "stages_block": 2
+      },
+      "description": "Сайт услуг с описанием сервисов и возможностью заказа"
+    },
+    "corporate": {
+      "indicators": {
+        "about_page": 2,
+        "team_block": 2,
+        "news_block": 2,
+        "contacts_page": 2,
+        "partners_block": 1
+      },
+      "description": "Корпоративный сайт компании"
+    },
+    "ecommerce": {
+      "indicators": {
+        "cart": 3,
+        "checkout": 3,
+        "product_cards": 3,
+        "catalog": 3,
+        "filters": 2,
+        "search": 2
+      },
+      "description": "Интернет-магазин с возможностью онлайн-покупки"
+    },
+    "catalog": {
+      "indicators": {
+        "product_cards": 3,
+        "catalog": 3,
+        "filters": 2,
+        "no_cart": 2,
+        "no_checkout": 2
+      },
+      "description": "Каталог товаров без возможности онлайн-покупки"
+    },
+    "portfolio": {
+      "indicators": {
+        "portfolio_gallery": 3,
+        "works_block": 3,
+        "no_ecommerce": 2
+      },
+      "description": "Портфолио / сайт-визитка с примерами работ"
+    }
+  },
+  "business_type_rules": {
+    "строительство": {
+      "keywords": ["строительство", "стройка", "застройщик", "строительная компания", "дом", "коттедж", "фундамент", "кирпич", "бетон"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "ремонт": {
+      "keywords": ["ремонт", "отделка", "ремонт квартир", "ремонт домов", "потолок", "стены", "пол", "поклейка", "покраска"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "медицина": {
+      "keywords": ["медицина", "клиника", "больница", "врач", "лечение", "здоровье", "медицинский", "стоматолог", "диагностика"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "образование": {
+      "keywords": ["образование", "обучение", "курсы", "школа", "университет", "колледж", "тренинг", "семинар", "лекции"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "логистика": {
+      "keywords": ["логистика", "доставка", "грузоперевозки", "транспорт", "склад", "груз", "перевозка", "логистический"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "мебель": {
+      "keywords": ["мебель", "мебельный", "шкаф", "диван", "стол", "кухня", "мебель на заказ", "корпусная мебель"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "e-commerce": {
+      "keywords": ["интернет-магазин", "купить", "заказать", "цена", "корзина", "доставка", "оплата"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "локальный бизнес": {
+      "keywords": ["город", "район", "улица", "адрес", "карта", "как добраться", "режим работы"],
+      "priority_areas": ["content", "footer"]
+    },
+    "юридические услуги": {
+      "keywords": ["юрист", "юридический", "адвокат", "право", "закон", "консультация", "иск", "суд"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "B2B": {
+      "keywords": ["оптовик", "опт", "партнер", "бизнес", "корпоративный", "предприятие", "производство", "завод"],
+      "priority_areas": ["title", "h1", "content"]
+    },
+    "красота": {
+      "keywords": ["салон", "красота", "парикмахер", "косметолог", "маникюр", "педикюр", "спа", "массаж", "брови"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "производство": {
+      "keywords": ["производство", "завод", "фабрика", "изготовление", "производственный", "цех"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "туризм": {
+      "keywords": ["туризм", "тур", "путешествие", "отель", "гостиница", "бронирование", "туры", "отдых"],
+      "priority_areas": ["title", "h1", "menu"]
+    },
+    "международный бизнес": {
+      "keywords": ["экспорт", "импорт", "международный", "worldwide", "global", "export", "import"],
+      "priority_areas": ["title", "h1", "content"]
+    }
+  },
+  "recommendation_rules": [
+    {
+      "canonical_id": "lead_form_inline",
+      "priority": "critical",
+      "recommend_if": {
+        "site_types": ["landing", "services", "corporate", "catalog"],
+        "business_types": ["all_commercial"],
+        "missing_features": ["lead_form_inline"]
+      },
+      "why": "На сайте нет явной встроенной точки захвата заявки.",
+      "marketing_goal": "Повышает конверсию в обращение."
+    },
+    {
+      "canonical_id": "popup_form",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["landing", "services", "ecommerce"],
+        "business_types": ["all_commercial"],
+        "missing_features": ["popup_form"]
+      },
+      "why": "Позволяет дополнительно перехватывать пользователей в момент интереса.",
+      "marketing_goal": "Увеличивает количество обращений."
+    },
+    {
+      "canonical_id": "callback_widget",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["services", "corporate", "landing"],
+        "business_types": ["медицина", "строительство", "юридические услуги", "ремонт", "B2B"],
+        "missing_features": ["callback_widget"]
+      },
+      "why": "Для сайтов услуг быстрый звонок часто удобнее длинной формы.",
+      "marketing_goal": "Снижает трение перед контактом."
+    },
+    {
+      "canonical_id": "messenger_buttons",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["landing", "services", "ecommerce"],
+        "business_types": ["малый бизнес", "локальный бизнес", "e-commerce", "красота", "медицина", "ремонт", "образование"],
+        "missing_features": ["messenger_buttons"]
+      },
+      "why": "Пользователям часто удобнее писать в мессенджер.",
+      "marketing_goal": "Снижает барьер входа в коммуникацию."
+    },
+    {
+      "canonical_id": "quiz_form",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["landing", "services", "catalog"],
+        "business_types": ["строительство", "ремонт", "медицина", "образование", "мебель", "B2B"],
+        "missing_features": ["quiz_form"]
+      },
+      "why": "Квиз помогает пройти путь выбора по шагам.",
+      "marketing_goal": "Повышает конверсию и сегментирует лиды."
+    },
+    {
+      "canonical_id": "service_calculator",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["services", "landing", "catalog"],
+        "business_types": ["строительство", "ремонт", "логистика", "мебель", "B2B"],
+        "missing_features": ["service_calculator"]
+      },
+      "why": "Когда стоимость зависит от параметров, нужен онлайн-расчёт.",
+      "marketing_goal": "Сокращает неопределённость по цене и увеличивает заявки."
+    },
+    {
+      "canonical_id": "faq_block",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["services", "landing", "corporate"],
+        "business_types": ["строительство", "медицина", "юридические услуги", "образование", "B2B", "ремонт"],
+        "missing_features": ["faq_block"]
+      },
+      "why": "На сложных услугах пользователи ищут ответы до обращения.",
+      "marketing_goal": "Снимает возражения и повышает доверие."
+    },
+    {
+      "canonical_id": "reviews_block",
+      "priority": "critical",
+      "recommend_if": {
+        "site_types": ["landing", "services", "corporate", "ecommerce"],
+        "business_types": ["all_commercial"],
+        "missing_features": ["reviews_block"]
+      },
+      "why": "Нет явного социального доказательства.",
+      "marketing_goal": "Повышает доверие и конверсию."
+    },
+    {
+      "canonical_id": "portfolio_gallery",
+      "priority": "critical",
+      "recommend_if": {
+        "site_types": ["services", "landing", "corporate"],
+        "business_types": ["строительство", "ремонт", "производство", "B2B"],
+        "missing_features": ["portfolio_gallery"]
+      },
+      "why": "Для проектных компаний отсутствие примеров работ снижает доверие.",
+      "marketing_goal": "Подтверждает опыт и повышает вероятность обращения."
+    },
+    {
+      "canonical_id": "contacts_with_map",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["services", "corporate", "ecommerce"],
+        "business_types": ["локальный бизнес", "e-commerce", "медицина"],
+        "missing_features": ["contacts_with_map"]
+      },
+      "why": "Локальному бизнесу важно быстро показать адрес и маршрут.",
+      "marketing_goal": "Снижает барьер перед визитом или звонком."
+    },
+    {
+      "canonical_id": "advantages_block",
+      "priority": "critical",
+      "recommend_if": {
+        "site_types": ["landing", "services", "corporate", "ecommerce"],
+        "business_types": ["all_commercial"],
+        "missing_features": ["advantages_block"]
+      },
+      "why": "Нет явного блока с УТП и преимуществами.",
+      "marketing_goal": "Помогает быстро объяснить, чем компания отличается от конкурентов."
+    },
+    {
+      "canonical_id": "stages_block",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["services", "landing", "corporate"],
+        "business_types": ["строительство", "ремонт", "B2B", "логистика"],
+        "missing_features": ["stages_block"]
+      },
+      "why": "Пользователю важно понимать, как будет строиться работа.",
+      "marketing_goal": "Снижает неопределённость и помогает снять возражения."
+    },
+    {
+      "canonical_id": "promo_block",
+      "priority": "medium",
+      "recommend_if": {
+        "site_types": ["landing", "services", "ecommerce"],
+        "business_types": ["e-commerce", "локальный бизнес"],
+        "missing_features": ["promo_block"]
+      },
+      "why": "Акции и спецпредложения лучше выносить в заметный блок.",
+      "marketing_goal": "Привлекает внимание к офферам и повышает конверсию."
+    },
+    {
+      "canonical_id": "timer_block",
+      "priority": "medium",
+      "recommend_if": {
+        "site_types": ["landing", "services", "ecommerce"],
+        "business_types": ["e-commerce", "локальный бизнес"],
+        "missing_features": ["timer_block"]
+      },
+      "why": "Ограниченные по времени предложения нужно визуально усиливать.",
+      "marketing_goal": "Добавляет ощущение срочности."
+    },
+    {
+      "canonical_id": "site_search",
+      "priority": "medium",
+      "recommend_if": {
+        "site_types": ["catalog", "corporate", "ecommerce"],
+        "business_types": ["e-commerce", "B2B"],
+        "missing_features": ["site_search"]
+      },
+      "why": "Когда на сайте много страниц или товаров, нужен быстрый поиск.",
+      "marketing_goal": "Улучшает навигацию и снижает потери пользователей."
+    },
+    {
+      "canonical_id": "smart_search",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["ecommerce", "catalog"],
+        "business_types": ["e-commerce"],
+        "missing_features": ["smart_search"]
+      },
+      "why": "На больших каталогах нужны подсказки и live-результаты.",
+      "marketing_goal": "Ускоряет поиск товара и улучшает UX."
+    },
+    {
+      "canonical_id": "wishlist_compare",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["ecommerce", "catalog"],
+        "business_types": ["e-commerce", "мебель"],
+        "missing_features": ["wishlist_compare"]
+      },
+      "why": "Пользователю нужно удобно сравнивать несколько товаров.",
+      "marketing_goal": "Повышает удобство выбора и удерживает пользователя."
+    },
+    {
+      "canonical_id": "mini_cart",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["ecommerce"],
+        "business_types": ["e-commerce"],
+        "missing_features": ["mini_cart"]
+      },
+      "why": "Пользователю удобнее видеть корзину без лишних переходов.",
+      "marketing_goal": "Сокращает лишние действия до заказа."
+    },
+    {
+      "canonical_id": "product_video",
+      "priority": "medium",
+      "recommend_if": {
+        "site_types": ["ecommerce", "catalog"],
+        "business_types": ["e-commerce", "мебель", "производство"],
+        "missing_features": ["product_video"]
+      },
+      "why": "Сложные товары лучше раскрывать через видео и доп.медиа.",
+      "marketing_goal": "Уменьшает сомнения и помогает принять решение."
+    },
+    {
+      "canonical_id": "stock_indicator",
+      "priority": "medium",
+      "recommend_if": {
+        "site_types": ["ecommerce", "catalog"],
+        "business_types": ["e-commerce"],
+        "missing_features": ["stock_indicator"]
+      },
+      "why": "Покупателю важно видеть наличие товара.",
+      "marketing_goal": "Улучшает прозрачность и иногда усиливает срочность."
+    },
+    {
+      "canonical_id": "one_click_payment",
+      "priority": "high",
+      "recommend_if": {
+        "site_types": ["ecommerce"],
+        "business_types": ["e-commerce"],
+        "missing_features": ["one_click_payment"]
+      },
+      "why": "Чем больше шагов в оплате, тем выше риск потери клиента.",
+      "marketing_goal": "Сокращает путь до оплаты."
+    },
+    {
+      "canonical_id": "language_switcher",
+      "priority": "medium",
+      "recommend_if": {
+        "site_types": ["corporate", "services", "ecommerce"],
+        "business_types": ["международный бизнес", "туризм"],
+        "missing_features": ["language_switcher"]
+      },
+      "why": "Для нескольких языковых аудиторий нужна языковая версия сайта.",
+      "marketing_goal": "Расширяет аудиторию и улучшает UX."
+    }
+  ],
+  "bundle_rules": [
+    {
+      "bundle_id": "leadgen_base_services",
+      "priority": "critical",
+      "bundle_title": "Пакет усиления лидогенерации",
+      "recommend_if": {
+        "site_types": ["landing", "services", "corporate"],
+        "missing_at_least": 2,
+        "from_features": ["lead_form_inline", "popup_form", "callback_widget", "messenger_buttons"]
+      }
+    },
+    {
+      "bundle_id": "trust_services",
+      "priority": "critical",
+      "bundle_title": "Пакет усиления доверия",
+      "recommend_if": {
+        "site_types": ["landing", "services", "corporate"],
+        "missing_at_least": 2,
+        "from_features": ["reviews_block", "faq_block", "advantages_block", "stages_block", "team_block", "portfolio_gallery"]
+      }
+    },
+    {
+      "bundle_id": "ecommerce_ux",
+      "priority": "high",
+      "bundle_title": "Пакет повышения удобства интернет-магазина",
+      "recommend_if": {
+        "site_types": ["ecommerce"],
+        "missing_at_least": 2,
+        "from_features": ["mini_cart", "wishlist_compare", "smart_search", "stock_indicator", "product_video"]
+      }
+    },
+    {
+      "bundle_id": "easy_checkout",
+      "priority": "high",
+      "bundle_title": "Пакет упрощения оформления заказа",
+      "recommend_if": {
+        "site_types": ["ecommerce"],
+        "missing_at_least": 2,
+        "from_features": ["mini_cart", "one_click_payment", "dynamic_price_recalc", "product_variants"]
+      }
+    },
+    {
+      "bundle_id": "landing_conversion",
+      "priority": "critical",
+      "bundle_title": "Пакет усиления конверсии лендинга",
+      "recommend_if": {
+        "site_types": ["landing"],
+        "missing_at_least": 3,
+        "from_features": ["advantages_block", "reviews_block", "lead_form_inline", "popup_form", "faq_block", "timer_block", "promo_block"]
+      }
+    }
+  ],
+  "stats": {
+    "total_source_items": 344,
+    "total_canonical_features": 59,
+    "status_breakdown": {
+      "bundle_only": 5,
+      "detect_soft": 157,
+      "detect_strict": 162,
+      "recommend_only": 20
+    }
+  }
+}

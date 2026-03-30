@@ -9,20 +9,40 @@ let cachedKnowledgeBase: KnowledgeBase | null = null;
  * Load knowledge base from JSON file
  * Uses caching to avoid repeated file reads
  */
-export function loadKnowledgeBase(): KnowledgeBase {
+export async function loadKnowledgeBase(): Promise<KnowledgeBase> {
   if (cachedKnowledgeBase) {
     return cachedKnowledgeBase;
   }
 
+  const url = process.env.KNOWLEDGE_BASE_URL;
+
+  if (url) {
+    try {
+      const res = await fetch(url, {
+        cache: 'no-store',
+      });
+
+      if (res.ok) {
+        const kb = (await res.json()) as KnowledgeBase;
+        cachedKnowledgeBase = kb;
+        return kb;
+      }
+
+      console.error('Failed to fetch remote knowledge base:', res.status, res.statusText);
+    } catch (error) {
+      console.error('Failed to fetch remote knowledge base:', error);
+    }
+  }
+
   const kbPath = path.join(process.cwd(), 'data', 'knowledge_base.json');
-  
+
   try {
     const rawContent = fs.readFileSync(kbPath, 'utf-8');
     const kb = JSON.parse(rawContent) as KnowledgeBase;
     cachedKnowledgeBase = kb;
     return kb;
   } catch (error) {
-    console.error('Failed to load knowledge base:', error);
+    console.error('Failed to load local knowledge base:', error);
     throw new Error('Failed to load knowledge base');
   }
 }

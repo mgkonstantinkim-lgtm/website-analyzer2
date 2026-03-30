@@ -51,7 +51,7 @@ export async function loadKnowledgeBase(): Promise<KnowledgeBase> {
  * Get feature by ID
  */
 export function getFeatureById(featureId: string): import('@/types').Feature | undefined {
-  const kb = loadKnowledgeBase();
+  const kb = await loadKnowledgeBase();
   return kb.feature_dictionary.find(f => f.id === featureId);
 }
 
@@ -59,7 +59,7 @@ export function getFeatureById(featureId: string): import('@/types').Feature | u
  * Get all detectable features
  */
 export function getDetectableFeatures(): import('@/types').Feature[] {
-  const kb = loadKnowledgeBase();
+  const kb = await loadKnowledgeBase();
   return kb.feature_dictionary.filter(f => f.detectable);
 }
 
@@ -67,7 +67,7 @@ export function getDetectableFeatures(): import('@/types').Feature[] {
  * Get features by category
  */
 export function getFeaturesByCategory(category: string): import('@/types').Feature[] {
-  const kb = loadKnowledgeBase();
+  const kb = await loadKnowledgeBase();
   return kb.feature_dictionary.filter(f => f.category === category);
 }
 
@@ -75,7 +75,7 @@ export function getFeaturesByCategory(category: string): import('@/types').Featu
  * Get scoring rules
  */
 export function getScoringRules(): import('@/types').ScoringRules {
-  const kb = loadKnowledgeBase();
+  const kb = await loadKnowledgeBase();
   return kb.scoring_rules;
 }
 
@@ -83,7 +83,7 @@ export function getScoringRules(): import('@/types').ScoringRules {
  * Get site type rules
  */
 export function getSiteTypeRules(): Record<string, import('@/types').SiteTypeRule> {
-  const kb = loadKnowledgeBase();
+  const kb = await loadKnowledgeBase();
   return kb.site_type_rules;
 }
 
@@ -91,7 +91,7 @@ export function getSiteTypeRules(): Record<string, import('@/types').SiteTypeRul
  * Get business type rules
  */
 export function getBusinessTypeRules(): Record<string, import('@/types').BusinessTypeRule> {
-  const kb = loadKnowledgeBase();
+  const kb = await loadKnowledgeBase();
   return kb.business_type_rules;
 }
 
@@ -99,7 +99,7 @@ export function getBusinessTypeRules(): Record<string, import('@/types').Busines
  * Get recommendation rules
  */
 export function getRecommendationRules(): import('@/types').RecommendationRule[] {
-  const kb = loadKnowledgeBase();
+  const kb = await loadKnowledgeBase();
   return kb.recommendation_rules;
 }
 
@@ -107,7 +107,7 @@ export function getRecommendationRules(): import('@/types').RecommendationRule[]
  * Get bundle rules
  */
 export function getBundleRules(): import('@/types').BundleRule[] {
-  const kb = loadKnowledgeBase();
+  const kb = await loadKnowledgeBase();
   return kb.bundle_rules;
 }
 

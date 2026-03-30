@@ -1,14 +1,17 @@
-import { KnowledgeBase } from '@/types';
 import fs from 'fs';
 import path from 'path';
+import type {
+  KnowledgeBase,
+  Feature,
+  ScoringRules,
+  SiteTypeRule,
+  BusinessTypeRule,
+  RecommendationRule,
+  BundleRule,
+} from '@/types';
 
-// Cache for loaded knowledge base
 let cachedKnowledgeBase: KnowledgeBase | null = null;
 
-/**
- * Load knowledge base from JSON file
- * Uses caching to avoid repeated file reads
- */
 export async function loadKnowledgeBase(): Promise<KnowledgeBase> {
   if (cachedKnowledgeBase) {
     return cachedKnowledgeBase;
@@ -18,102 +21,65 @@ export async function loadKnowledgeBase(): Promise<KnowledgeBase> {
 
   if (url) {
     try {
-      const res = await fetch(url, {
-        cache: 'no-store',
-      });
+      const res = await fetch(url, { cache: 'no-store' });
 
       if (res.ok) {
         const kb = (await res.json()) as KnowledgeBase;
         cachedKnowledgeBase = kb;
         return kb;
       }
-
-      console.error('Failed to fetch remote knowledge base:', res.status, res.statusText);
     } catch (error) {
-      console.error('Failed to fetch remote knowledge base:', error);
+      console.error('Remote load failed:', error);
     }
   }
 
   const kbPath = path.join(process.cwd(), 'data', 'knowledge_base.json');
 
-  try {
-    const rawContent = fs.readFileSync(kbPath, 'utf-8');
-    const kb = JSON.parse(rawContent) as KnowledgeBase;
-    cachedKnowledgeBase = kb;
-    return kb;
-  } catch (error) {
-    console.error('Failed to load local knowledge base:', error);
-    throw new Error('Failed to load knowledge base');
-  }
+  const raw = fs.readFileSync(kbPath, 'utf-8');
+  const kb = JSON.parse(raw) as KnowledgeBase;
+  cachedKnowledgeBase = kb;
+
+  return kb;
 }
 
-/**
- * Get feature by ID
- */
-export function getFeatureById(featureId: string): import('@/types').Feature | undefined {
+// ================= API =================
+
+export async function getFeatureById(featureId: string): Promise<Feature | undefined> {
   const kb = await loadKnowledgeBase();
-  return kb.feature_dictionary.find(f => f.id === featureId);
+  return kb.feature_dictionary?.find(f => f.id === featureId);
 }
 
-/**
- * Get all detectable features
- */
-export function getDetectableFeatures(): import('@/types').Feature[] {
+export async function getDetectableFeatures(): Promise<Feature[]> {
   const kb = await loadKnowledgeBase();
-  return kb.feature_dictionary.filter(f => f.detectable);
+  return (kb.feature_dictionary ?? []).filter(f => f.detectable);
 }
 
-/**
- * Get features by category
- */
-export function getFeaturesByCategory(category: string): import('@/types').Feature[] {
+export async function getFeaturesByCategory(category: string): Promise<Feature[]> {
   const kb = await loadKnowledgeBase();
-  return kb.feature_dictionary.filter(f => f.category === category);
+  return (kb.feature_dictionary ?? []).filter(f => f.category === category);
 }
 
-/**
- * Get scoring rules
- */
-export function getScoringRules(): import('@/types').ScoringRules {
+export async function getScoringRules(): Promise<ScoringRules> {
   const kb = await loadKnowledgeBase();
   return kb.scoring_rules;
 }
 
-/**
- * Get site type rules
- */
-export function getSiteTypeRules(): Record<string, import('@/types').SiteTypeRule> {
+export async function getSiteTypeRules(): Promise<Record<string, SiteTypeRule>> {
   const kb = await loadKnowledgeBase();
-  return kb.site_type_rules;
+  return kb.site_type_rules ?? {};
 }
 
-/**
- * Get business type rules
- */
-export function getBusinessTypeRules(): Record<string, import('@/types').BusinessTypeRule> {
+export async function getBusinessTypeRules(): Promise<Record<string, BusinessTypeRule>> {
   const kb = await loadKnowledgeBase();
-  return kb.business_type_rules;
+  return kb.business_type_rules ?? {};
 }
 
-/**
- * Get recommendation rules
- */
-export function getRecommendationRules(): import('@/types').RecommendationRule[] {
+export async function getRecommendationRules(): Promise<RecommendationRule[]> {
   const kb = await loadKnowledgeBase();
-  return kb.recommendation_rules;
+  return kb.recommendation_rules ?? [];
 }
 
-/**
- * Get bundle rules
- */
-export function getBundleRules(): import('@/types').BundleRule[] {
+export async function getBundleRules(): Promise<BundleRule[]> {
   const kb = await loadKnowledgeBase();
-  return kb.bundle_rules;
-}
-
-/**
- * Clear cache (useful for testing or hot reload)
- */
-export function clearCache(): void {
-  cachedKnowledgeBase = null;
+  return kb.bundle_rules ?? [];
 }
